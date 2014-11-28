@@ -17,9 +17,15 @@
       </div>
     </div>
 
-    <div class="container">
+    <div id="main-region" class="container">
       <p>Here is static content in the web page. You'll notice that it gets replaced by our app as soon as we start it.</p>
     </div>
+
+    <!--This is a static template-->
+    <script type="text/template" id="static-template">
+      <p>This is text rendered by marionette</p>
+    </script>
+
 
     <script src="./assets/js/vendor/jquery.js"></script>
     <script src="./assets/js/vendor/json2.js"></script>
@@ -27,5 +33,33 @@
     <script src="./assets/js/vendor/backbone.js"></script>
     <script src="./assets/js/vendor/backbone.marionette.js"></script>
 
+
+
+    <script type="text/javascript">
+      //      New up Marionette application
+      var ContactManager = new Marionette.Application();
+
+      // Add main region for app to attach to
+      ContactManager.addRegions({
+        mainRegion: "#main-region"
+      });
+
+      // extend an Item view to our app using a template as defined by id
+      ContactManager.StaticView = Marionette.ItemView.extend({
+        template: "#static-template"
+      });
+
+      //start up app
+      ContactManager.on("start", function() {
+        // new up view to pull into app
+        var staticView = new ContactManager.StaticView();
+
+        // show view including merged template within 'mainRegion' defined on app.
+        ContactManager.mainRegion.show(staticView);
+      });
+
+      //start the app
+      ContactManager.start();
+    </script>
   </body>
 </html>
