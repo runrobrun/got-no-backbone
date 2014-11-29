@@ -27,7 +27,7 @@
     </script>
 
     <script type="text/template" id="different-static-template">
-      <p>DIfferent static template</p>
+      <li>DIfferent static template</li>
     </script>
 
 
@@ -52,9 +52,9 @@
       // extend an Item view to our app using a template as defined by id
       ContactManager.StaticView = Marionette.ItemView.extend({
         id: "static-view",
-        tagName: 'span',
+        tagName: 'ul',
         className: 'instructions',
-        template: "#static-template"
+        template: "#different-static-template"
       });
 
       //start up app
