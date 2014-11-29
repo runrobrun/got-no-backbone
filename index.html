@@ -50,7 +50,11 @@
       });
 
       // Create a model for our app
-      ContactManager.Contact = Backbone.Model.extend({});
+      ContactManager.Contact = Backbone.Model.extend({
+        defaults: {
+          phoneNumber: "No Phone Number!"
+        }
+      });
 
       // extend an Item view to our app using a template as defined by id
       ContactManager.ContactView = Marionette.ItemView.extend({
@@ -70,8 +74,7 @@
 
         var alice = new ContactManager.Contact({
           firstName: 'Alice',
-          lastName: 'Arten',
-          phoneNumber: '555-0184'
+          lastName: 'Arten'
         });
 
         // new up view to pull into app
