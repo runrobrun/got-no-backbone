@@ -26,6 +26,11 @@
       <p>This is text rendered by marionette</p>
     </script>
 
+    <script type="text/template" id="different-static-template">
+      <p>DIfferent static template</p>
+    </script>
+
+
 
     <script src="./assets/js/vendor/jquery.js"></script>
     <script src="./assets/js/vendor/json2.js"></script>
@@ -46,6 +51,9 @@
 
       // extend an Item view to our app using a template as defined by id
       ContactManager.StaticView = Marionette.ItemView.extend({
+        id: "static-view",
+        tagName: 'span',
+        className: 'instructions',
         template: "#static-template"
       });
 
