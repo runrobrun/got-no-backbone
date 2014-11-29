@@ -54,7 +54,15 @@
 
       // extend an Item view to our app using a template as defined by id
       ContactManager.ContactView = Marionette.ItemView.extend({
-        template: "#contact-template"
+        template: "#contact-template",
+
+        events: {
+          "click p" : "alertPhoneNumber"
+        },
+
+        alertPhoneNumber: function() {
+          alert(this.model.escape("phoneNumber"));
+        }
       });
 
       //start up app
