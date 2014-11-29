@@ -51,16 +51,21 @@
 
       // extend an Item view to our app using a template as defined by id
       ContactManager.StaticView = Marionette.ItemView.extend({
-        id: "static-view",
-        tagName: 'ul',
-        className: 'instructions',
-        template: "#different-static-template"
+        onRender: function() {
+          console.log("I've rendered to the screen now. AWESOME!")
+        }
+
       });
 
       //start up app
       ContactManager.on("start", function() {
         // new up view to pull into app
-        var staticView = new ContactManager.StaticView();
+        var staticView = new ContactManager.StaticView({
+          template: "#different-static-template",
+          id: "static-view",
+          tagName: 'ul',
+          className: 'instructions'
+        });
 
         // show view including merged template within 'mainRegion' defined on app.
         ContactManager.mainRegion.show(staticView);
