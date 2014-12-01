@@ -34,23 +34,13 @@
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/entities/contact.js"></script>
     <script src="./assets/js/apps/contacts/list/list_view.js"></script>
+    <script src="./assets/js/apps/contacts/list/list_controller.js"></script>
 
     <script type="text/javascript">
-
       //start up app
       ContactManager.on("start", function() {
-
-        var contacts = ContactManager.request("contact:entities");
-
-        // new up view to pull into app
-        var contactsListView = new ContactManager.ContactsApp.List.Contacts({
-          collection: contacts
-        });
-
-        // show view including merged template within 'mainRegion' defined on app.
-        ContactManager.mainRegion.show(contactsListView);
+        ContactManager.ContactsApp.List.Controller.listContacts();
       });
-
       //start the app
       ContactManager.start();
     </script>
