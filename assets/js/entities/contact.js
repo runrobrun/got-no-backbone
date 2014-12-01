@@ -29,6 +29,17 @@ ContactManager.module("Entities", function(Entities, ContactManger, Backbone, Ma
         firstName: 'Charlie',
         lastName: 'Campbell',
         phoneNumber: '555-1029'
+      },
+      {
+        id:5,
+        firstName: 'Abe',
+        lastName: 'Apple'
+      },
+      {
+        id: 4,
+        firstName: 'Rob',
+        lastName: 'Hammann',
+        phoneNumber: '555-1111'
       }
     ]);
   };
