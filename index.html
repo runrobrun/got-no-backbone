@@ -21,12 +21,9 @@
       <p>Here is static content in the web page. You'll notice that it gets replaced by our app as soon as we start it.</p>
     </div>
 
-    <!--This is a static template-->
-
     <script type="text/template" id="contact-list-item">
       <%- firstName %> <%- lastName %>
     </script>
-
 
     <script src="./assets/js/vendor/jquery.js"></script>
     <script src="./assets/js/vendor/json2.js"></script>
@@ -36,25 +33,9 @@
 
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/entities/contact.js"></script>
-
-
+    <script src="./assets/js/apps/contacts/list/list_view.js"></script>
 
     <script type="text/javascript">
-
-
-
-
-      // extend an Item view to our app using a template as defined by id
-      ContactManager.ContactItemView = Marionette.ItemView.extend({
-        tagName: 'li',
-        template: "#contact-list-item"
-      });
-
-      ContactManager.ContactsView = Marionette.CollectionView.extend({
-        tagName: 'ul',
-        childView: ContactManager.ContactItemView
-      });
-
 
       //start up app
       ContactManager.on("start", function() {
@@ -62,7 +43,7 @@
         var contacts = ContactManager.request("contact:entities");
 
         // new up view to pull into app
-        var contactsListView = new ContactManager.ContactsView({
+        var contactsListView = new ContactManager.ContactsApp.List.Contacts({
           collection: contacts
         });
 
