@@ -59,24 +59,7 @@
       //start up app
       ContactManager.on("start", function() {
 
-        var contacts = new ContactManager.Entities.ContactCollection([
-
-          {
-            firstName: 'Bob',
-            lastName: 'Brigham',
-            phoneNumber: '555-0163'
-          },
-          {
-            firstName: 'Alice',
-            lastName: 'Arten',
-            phoneNumber: '555-0184'
-          },
-          {
-            firstName: 'Charlie',
-            lastName: 'Campbell',
-            phoneNumber: '555-1029'
-          }
-        ]);
+        var contacts = ContactManager.request("contact:entities");
 
         // new up view to pull into app
         var contactsListView = new ContactManager.ContactsView({
