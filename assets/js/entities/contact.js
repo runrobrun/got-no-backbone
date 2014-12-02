@@ -1,6 +1,10 @@
 ContactManager.module("Entities", function(Entities, ContactManger, Backbone, Marionette, $, _){
   // Create a model for our app
-  Entities.Contact = Backbone.Model.extend({});
+  Entities.Contact = Backbone.Model.extend({
+    getFullName: function() {
+      return this.get('firstName') + ' ' + this.get('lastName');
+    }
+  });
 
   Entities.ContactCollection = Backbone.Collection.extend({
     model: Entities.Contact,
@@ -33,7 +37,8 @@ ContactManager.module("Entities", function(Entities, ContactManger, Backbone, Ma
       {
         id:5,
         firstName: 'Abe',
-        lastName: 'Apple'
+        lastName: 'Apple',
+        phoneNumber: '555-2222'
       },
       {
         id: 4,
