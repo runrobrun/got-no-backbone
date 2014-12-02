@@ -4,11 +4,11 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
     template: "#contact-list-item",
 
     events: {
-      "click": "highlightName"
+      "click": "showName"
     },
 
-    highlightName: function() {
-      this.$el.toggleClass("warning");
+    showName: function(e) {
+      console.log($(e.target).text());
     }
 
   });
