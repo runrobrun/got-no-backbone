@@ -31,7 +31,6 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
           Marionette.ItemView.prototype.remove.call(self);
         }
       );
-      console.log('You just removed:  ' + this.model.get('firstName') + ' ' + this.model.get('lastName'));
     }
 
 
