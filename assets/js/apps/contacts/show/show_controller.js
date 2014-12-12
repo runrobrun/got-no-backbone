@@ -5,7 +5,7 @@ ContactManager.module("ContactsApp.Show", function(Show, ContactManager, Backbon
       var model = contacts.get(id);
       var contactView;
       if(model !== undefined) {
-        var contactView = new Show.Contact({
+        contactView = new Show.Contact({
           model: model
         });
       } else {
