@@ -1,20 +1,26 @@
 ContactManager.module("Entities", function(Entities, ContactManger, Backbone, Marionette, $, _){
   // Create a model for our app
   Entities.Contact = Backbone.Model.extend({
+    urlRoot:"contacts",
     getFullName: function() {
       return this.get('firstName') + ' ' + this.get('lastName');
     }
   });
 
+  Entities.configureStorage(Entities.Contact);
+
   Entities.ContactCollection = Backbone.Collection.extend({
+    url: "contacts",
     model: Entities.Contact,
     comparator: "firstName"
   });
 
+  Entities.configureStorage(Entities.ContactCollection);
+
   var contacts;
 
   var initializeContacts = function() {
-    contacts = new ContactManager.Entities.ContactCollection([
+    var contacts = new Entities.ContactCollection([
 
       {
         id: 1,
@@ -47,15 +53,22 @@ ContactManager.module("Entities", function(Entities, ContactManger, Backbone, Ma
         phoneNumber: '555-1111'
       }
     ]);
+    contacts.forEach(function(contact){
+      contact.save();
+    });
+    return contacts;
   };
 
   var API = {
     getContactEntities: function() {
-      if (contacts === undefined) {
-        initializeContacts();
+      var contacts = new Entities.ContactCollection();
+      contacts.fetch();
+      if (contacts.length === 0) {
+        return initializeContacts();
       }
-      return contacts;
+    return contacts;
     }
+
   };
 
   ContactManger.reqres.setHandler("contact:entities", function() {
