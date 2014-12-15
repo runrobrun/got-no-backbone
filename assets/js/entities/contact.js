@@ -67,13 +67,22 @@ ContactManager.module("Entities", function(Entities, ContactManger, Backbone, Ma
         return initializeContacts();
       }
     return contacts;
+    },
+    getContactEntity: function(contactId) {
+      var contact = new Entities.Contact({id: contactId});
+      contact.fetch();
+      return contact;
     }
 
   };
 
   ContactManger.reqres.setHandler("contact:entities", function() {
     return API.getContactEntities();
-  })
+  });
+
+  ContactManger.reqres.setHandler("contact:entity", function(id) {
+    return API.getContactEntity(id);
+  });
 
 });
 
