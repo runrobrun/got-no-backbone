@@ -15,6 +15,11 @@ ContactManager.module("ContactsApp.Show", function(Show, ContactManager, Backbon
           contactView = new Show.Contact({
             model: contact
           });
+
+          contactView.on("contact:edit", function(contact){
+            ContactManager.trigger("contact:edit", contact.get("id"));
+          });
+
         } else {
           contactView = new Show.MissingContact();
         }
