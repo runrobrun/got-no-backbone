@@ -8,7 +8,12 @@ ContactManager.module("ContactsApp.Edit", function(Edit, ContactManager, Backbon
 
     submitClicked: function(e) {
       e.preventDefault();
-      this.trigger("contact:edit", this.model);
+      var data = Backbone.Syphon.serialize(this);
+      this.trigger("form:submit", data);
+    },
+
+    onFormDataInvalid: function(errors) {
+      console.log("invalid form data: ", errors);
     }
 
   })

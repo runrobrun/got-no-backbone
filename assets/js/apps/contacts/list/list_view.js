@@ -32,8 +32,6 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
         }
       );
     }
-
-
   });
 
   List.Contacts = Marionette.CompositeView.extend({
