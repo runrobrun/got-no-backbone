@@ -15,6 +15,16 @@ ContactManager.module("ContactsApp.List", function( List, ContactManager, Backbo
           function (childView, model) {
             ContactManager.trigger("contact:show", model.get("id"));
           });
+
+        contactsListView.on("childview:contact:edit", function(childView, model) {
+          var view = new ContactManager.ContactsApp.Edit.Contact({
+            model: model,
+            asModal: true
+          });
+
+          ContactManager.dialogRegion.show(view);
+
+        });
         contactsListView.on("childview:contact:delete",
           function (childView, model) {
             model.destroy();
