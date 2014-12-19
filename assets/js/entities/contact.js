@@ -9,7 +9,7 @@ ContactManager.module("Entities", function(Entities, ContactManger, Backbone, Ma
         errors.firstName = "Can't be blank";
       }
       if (! attrs.lastName) {
-        errors.firstName = "Can't be blank";
+        errors.lastName = "Can't be blank";
       } else {
         if (attrs.lastName.length < 2){
           errors.lastName = "Come on. That is a pretty short last name! Try again.";
