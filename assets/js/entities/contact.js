@@ -43,46 +43,6 @@ ContactManager.module("Entities", function(Entities, ContactManger, Backbone, Ma
 
   var contacts;
 
-  var initializeContacts = function() {
-    var contacts = new Entities.ContactCollection([
-
-      {
-        id: 1,
-        firstName: 'Bob',
-        lastName: 'Brigham',
-        phoneNumber: '555-0163'
-      },
-      {
-        id: 2,
-        firstName: 'Alice',
-        lastName: 'Arten',
-        phoneNumber: '555-0184'
-      },
-      {
-        id: 3,
-        firstName: 'Charlie',
-        lastName: 'Campbell',
-        phoneNumber: '555-1029'
-      },
-      {
-        id:5,
-        firstName: 'Abe',
-        lastName: 'Apple',
-        phoneNumber: '555-2222'
-      },
-      {
-        id: 4,
-        firstName: 'Rob',
-        lastName: 'Hammann',
-        phoneNumber: '555-1111'
-      }
-    ]);
-    contacts.forEach(function(contact){
-      contact.save();
-    });
-    return contacts.models;
-  };
-
   var API = {
     getContactEntities: function() {
       var contacts = new Entities.ContactCollection();
@@ -92,14 +52,8 @@ ContactManager.module("Entities", function(Entities, ContactManger, Backbone, Ma
           defer.resolve(data);
         }
       });
-      var promise = defer.promise();
-      $.when(promise).done(function(contacts){
-        if(contacts.length === 0) {
-          var models = initializeContacts();
-          contacts.reset(models);
-        }
-      });
-      return promise;
+
+      return defer.promise();
     },
     getContactEntity: function(contactId) {
       var contact = new Entities.Contact({id: contactId});
