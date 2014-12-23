@@ -12,23 +12,6 @@ ContactManager.module("ContactsApp.Common.Views", function(Views, ContactManager
             this.trigger("form:submit", data);
         },
 
-        onRender: function(){
-            if( ! this.options.asModal){
-                var $title = $("<h1>", { text: this.title });
-                this.$el.prepend($title);
-            }
-        },
-
-        onShow: function(){
-            if(this.options.asModal){
-                this.$el.dialog({
-                    modal: true,
-                    title: this.title,
-                    width: "auto"
-                });
-            }
-        },
-
         onFormDataInvalid: function(errors){
             var $view = this.$el;
 
@@ -40,13 +23,13 @@ ContactManager.module("ContactsApp.Common.Views", function(Views, ContactManager
                 $form.find(".control-group.error").each(function(){
                     $(this).removeClass("error");
                 });
-            };
+            }
 
             var markErrors = function(value, key){
                 var $controlGroup = $view.find("#contact-" + key).parent();
                 var $errorEl = $("<span>", { class: "help-inline error", text: value });
                 $controlGroup.append($errorEl).addClass("error");
-            };
+            }
 
             clearFormErrors();
             _.each(errors, markErrors);

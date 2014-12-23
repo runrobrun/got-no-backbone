@@ -1,4 +1,4 @@
-ContactManager.module("ContactsApp.List", function( List, ContactManager, Backbone, Marionette, $, _) {
+ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbone, Marionette, $, _){
   List.Controller = {
     listContacts: function () {
       var loadingView = new ContactManager.Common.Views.Loading();
@@ -23,8 +23,7 @@ ContactManager.module("ContactsApp.List", function( List, ContactManager, Backbo
           var newContact = new ContactManager.Entities.Contact();
 
           var view = new ContactManager.ContactsApp.New.Contact({
-            model: newContact,
-            asModal: true
+            model: newContact
           });
 
           view.on("form:submit", function(data) {
@@ -36,7 +35,7 @@ ContactManager.module("ContactsApp.List", function( List, ContactManager, Backbo
             }
             if (newContact.save(data)){
               contacts.add(newContact);
-              ContactManager.dialogRegion.empty();
+              view.trigger("dialog:close");
               contactsListView.children.findByModel(newContact).flash("success");
             } else {
               view.triggerMethod("form:data:invalid", newContact.validationError);
@@ -52,14 +51,13 @@ ContactManager.module("ContactsApp.List", function( List, ContactManager, Backbo
         contactsListView.on("childview:contact:edit", function(childView, args){
           var model = args.model;
           var view = new ContactManager.ContactsApp.Edit.Contact({
-            model: model,
-            asModal: true
+            model: model
           });
 
           view.on("form:submit", function(data){
             if(model.save(data)){
               childView.render();
-              ContactManager.dialogRegion.empty();
+              view.trigger("dialog:close");
               childView.flash("success");
             } else {
               view.triggerMethod("form:data:invalid", model.validationError);
