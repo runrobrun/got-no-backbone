@@ -70,7 +70,21 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
     className: 'table table-hover',
     template: "#contact-list",
     childView: List.Contact,
-    childViewContainer: "tbody"
+    childViewContainer: "tbody",
+
+    initialize: function() {
+      this.listenTo(this.collection, "reset", function() {
+        this.attachHtml = function(collectionView, childView, index) {
+          collectionView.$el.append(childView.el);
+        }
+      });
+    },
+
+    onRenderCollection: function() {
+      this.attachHtml = function(collectionView, childView, index){
+        collectionView.$el.prepend(childView.el);
+      }
+    }
   });
 
 });
