@@ -1,7 +1,7 @@
-ContactManager.module("Entities", function(Entities, ContactManger, Backbone, Marionette, $, _){
+ContactManager.module("Entities", function(Entities, ContactManager, Backbone, Marionette, $, _){
   // Create a model for our app
   Entities.Contact = Backbone.Model.extend({
-    urlRoot:"contacts",
+    urlRoot: "contacts",
 
     defaults: {
       firstName: "",
@@ -41,21 +41,39 @@ ContactManager.module("Entities", function(Entities, ContactManger, Backbone, Ma
 
   Entities.configureStorage(Entities.ContactCollection);
 
-  var contacts;
+  var initializeContacts = function(){
+    contacts = new Entities.ContactCollection([
+      { id: 1, firstName: "Alice", lastName: "Arten", phoneNumber: "555-0184" },
+      { id: 2, firstName: "Bob", lastName: "Brigham", phoneNumber: "555-0163" },
+      { id: 3, firstName: "Charlie", lastName: "Campbell", phoneNumber: "555-0129" }
+    ]);
+    contacts.forEach(function(contact){
+      contact.save();
+    });
+    return contacts.models;
+  };
 
   var API = {
     getContactEntities: function() {
       var contacts = new Entities.ContactCollection();
-      var defer = $. Deferred();
+      var defer = $.Deferred();
       contacts.fetch({
         success: function(data){
           defer.resolve(data);
         }
       });
 
-      return defer.promise();
+      var promise = defer.promise();
+      $.when(promise).done(function(contacts){
+        if(contacts.length === 0){
+// if we don't have any contacts yet, create some for convenience
+          var models = initializeContacts();
+          contacts.reset(models);
+        }
+      });
+      return promise;
     },
-    getContactEntity: function(contactId) {
+    getContactEntity: function(contactId){
       var contact = new Entities.Contact({id: contactId});
       var defer = $.Deferred();
       setTimeout(function() {
@@ -73,14 +91,10 @@ ContactManager.module("Entities", function(Entities, ContactManger, Backbone, Ma
 
   };
 
-  ContactManger.reqres.setHandler("contact:entities", function() {
+  ContactManager.reqres.setHandler("contact:entities", function(){
     return API.getContactEntities();
   });
-
-  ContactManger.reqres.setHandler("contact:entity", function(id) {
+  ContactManager.reqres.setHandler("contact:entity", function(id){
     return API.getContactEntity(id);
   });
-
 });
-
-

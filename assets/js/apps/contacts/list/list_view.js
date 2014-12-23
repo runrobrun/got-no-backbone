@@ -1,5 +1,4 @@
 ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbone, Marionette, $, _){
-
   List.Layout = Marionette.LayoutView.extend({
     template: "#contact-list-layout",
 
@@ -11,80 +10,66 @@ ContactManager.module("ContactsApp.List", function(List, ContactManager, Backbon
 
   List.Panel = Marionette.ItemView.extend({
     template: "#contact-list-panel",
-    triggers: {"click button.js-new": "contact:new"}
+
+    triggers: {
+      "click button.js-new": "contact:new"
+    }
   });
 
   List.Contact = Marionette.ItemView.extend({
-    tagName: 'tr',
+    tagName: "tr",
     template: "#contact-list-item",
 
-    events: {
-      "click": "highlightName",
-      "click a.js-show": "showClicked",
-      "click a.js-edit": "editClicked",
-      "click button.js-delete": "deleteClicked"
-
+    triggers: {
+      "click td a.js-show": "contact:show",
+      "click td a.js-edit": "contact:edit",
+      "click button.js-delete": "contact:delete"
     },
 
-    flash: function(cssClass) {
+    events: {
+      "click": "highlightName"
+    },
+
+    flash: function(cssClass){
       var $view = this.$el;
-      $view.hide().toggleClass(cssClass).fadeIn(800, function() {
-        setTimeout(function() {
-          $view.toggleClass(cssClass)}, 500);
+      $view.hide().toggleClass(cssClass).fadeIn(800, function(){
+        setTimeout(function(){
+          $view.toggleClass(cssClass)
+        }, 500);
       });
     },
 
-    highlightName: function() {
+    highlightName: function(e){
       this.$el.toggleClass("warning");
     },
 
-    showClicked: function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.trigger("contact:show", this.model);
-    },
-
-    editClicked:function(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.trigger("contact:edit", this.model);
-
-    },
-
-    deleteClicked: function(e){
-      e.stopPropagation();
-      this.trigger("contact:delete", this.model);
-    },
-
-    remove: function() {
+    remove: function(){
       var self = this;
-      this.$el.fadeOut(function() {
-          Marionette.ItemView.prototype.remove.call(self);
-        }
-      );
+      this.$el.fadeOut(function(){
+        Marionette.ItemView.prototype.remove.call(self);
+      });
     }
   });
 
   List.Contacts = Marionette.CompositeView.extend({
-    tagName: 'table',
-    className: 'table table-hover',
+    tagName: "table",
+    className: "table table-hover",
     template: "#contact-list",
     childView: List.Contact,
     childViewContainer: "tbody",
 
-    initialize: function() {
-      this.listenTo(this.collection, "reset", function() {
-        this.attachHtml = function(collectionView, childView, index) {
+    initialize: function(){
+      this.listenTo(this.collection, "reset", function(){
+        this.attachHtml = function(collectionView, childView, index){
           collectionView.$el.append(childView.el);
         }
       });
     },
 
-    onRenderCollection: function() {
+    onRenderCollection: function(){
       this.attachHtml = function(collectionView, childView, index){
         collectionView.$el.prepend(childView.el);
       }
     }
   });
-
 });
